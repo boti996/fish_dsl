@@ -1,14 +1,9 @@
 package boti996.dsl.proba
 
-
-@DslMarker
-annotation class GameDsl
-
-
-//@GameDsl
-class GameBuilder {
-
-}
+////@GameDsl
+//class GameBuilder {
+//
+//}
 
 //class PersonBuilder(initialName: String, initialAge: Int) {
 //    var name: String = initialName
@@ -19,17 +14,17 @@ class GameBuilder {
 //    }
 //}
 
-@GameDsl
-fun game(): Game {
-    val gameBuilder = GameBuilder()
-}
-
-
+//@GameDsl
+//fun game(): Game {
+//    val gameBuilder = GameBuilder()
+//}
+//
+//
 
 fun main() {
-    val game = game {
-
-    }
-
-    print(game)
+//    val game = game {
+//
+//    }
+//
+//    print(game)
 }

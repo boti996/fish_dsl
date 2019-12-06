@@ -4,9 +4,9 @@ import boti996.dsl.proba.models.BonusProviders.Accessory
 import boti996.dsl.proba.models.BonusProviders.Environment
 import boti996.dsl.proba.models.BonusProviders.Position
 
-data class Level(val is_skippable: Boolean,
-                 val is_extra_accessories_enabled: Boolean,
-                 val extra_money_bonus: Float,
+data class Level(val isSkippable: Boolean,
+                 val isExtraAccessoriesEnabled: Boolean,
+                 val extraMoneyBonus: Float,
                  val environment: Environment,
                  val fishes: List<Fish>,
                  val accessories: List<Accessory>) {
@@ -16,16 +16,18 @@ data class Level(val is_skippable: Boolean,
 
 
 
-data class Game(val initial_money: Int,
-                val money_bonus_per_level: Float,
-                val max_skippable_levels: Int,
-                val level_size: Position,
-                val levels: List<Level>
-) {
+data class Game(val initialMoney: Int,
+                val moneyBonusPerLevel: Float,
+                val maxSkippableLevels: Int,
+                val levelSize: Position,
+                val levels: List<Level>) {
 
     fun getCurrentLevel() : Level {
-        //TODO:
+        TODO()
     }
 
-    // TODO: add levels
+// TODO: might not be necessary
+//    fun addLevel(level: Level) = levels.add(level)
+//
+//    fun addLevels(newLevels: Iterable<Level>) = levels.addAll(newLevels)
 }
