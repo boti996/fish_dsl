@@ -9,7 +9,7 @@ class Shop : AbstractStorage<ShopEntry<Fish>, ShopEntry<Accessory>>()
 class Storage : AbstractStorage<Fish, Accessory>()
 
 abstract class AbstractStorage<F, A> {
-    private val fishes: List<F> = mutableListOf()
+    val fishes: List<F> = mutableListOf()
 
     fun addFish(fish: F) {
         fishes as MutableList
@@ -21,7 +21,7 @@ abstract class AbstractStorage<F, A> {
         fishes.remove(fish)
     }
 
-    private val accessories: List<A> = mutableListOf()
+    val accessories: List<A> = mutableListOf()
 
     fun addAccessory(accessory: A) {
         accessories as MutableList

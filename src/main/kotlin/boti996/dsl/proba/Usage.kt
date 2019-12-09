@@ -19,7 +19,12 @@ fun main() {
             fish(Environment.TROPICAL)
         }
         note("Level 2")
-        level(true, false, 0.2F, Environment.DEEP_SEA) {
+        level(
+            isSkippable = true,
+            isExtraAccessoriesEnabled = false,
+            extraMoneyBonus = 0.2F,
+            environment = Environment.DEEP_SEA
+        ) {
             note("Mobs")
             fish(Environment.DEEP_SEA)
             fish(Environment.DEEP_SEA)

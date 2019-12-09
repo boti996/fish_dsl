@@ -9,12 +9,7 @@ data class Level(val isSkippable: Boolean,
                  val extraMoneyBonus: Float,
                  val environment: Environment,
                  val fishes: List<Fish>,
-                 val accessories: List<Accessory>) {
-    //TODO: add fishes and equipments
-}
-
-
-
+                 val accessories: List<Accessory>)
 
 data class Game(val initialMoney: Int,
                 val moneyBonusPerLevel: Float,
@@ -22,13 +17,8 @@ data class Game(val initialMoney: Int,
                 val levelSize: Position,
                 val levels: List<Level>) {
 
-    private var storage = Storage()
-    fun getStorage() = storage
-    fun setStorage(newStorage : Storage) { storage  = newStorage }
-
-    private var shop = Shop()
-    fun getShop() = shop
-    fun setShop(newShop : Shop) { shop = newShop }
+    var storage = Storage()
+    var shop = Shop()
 
     private var currentLevelIdx = 0
 

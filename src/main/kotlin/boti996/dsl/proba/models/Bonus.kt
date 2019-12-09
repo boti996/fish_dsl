@@ -62,7 +62,6 @@ interface BonusAcceptor {
  */
 data class Bonus(val bonus: BonusType, var multiplier: Float = 1.0f) {
     fun getBonus(): Map<BonusEffect, Float> = bonus.getBonus(multiplier)
-    //TODO fun ...
 }
 
 /**

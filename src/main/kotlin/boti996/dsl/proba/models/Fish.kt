@@ -5,12 +5,12 @@ import boti996.dsl.proba.models.BonusProviders.EnvironmentalBehaviour
 import boti996.dsl.proba.models.BonusProviders.Equipment
 
 data class Fish(override val type: Environment,
-                val equipments: List<Equipment>) : EnvironmentalBehaviour, BonusAcceptor {
+                val equipments: List<Equipment> = listOf()) : EnvironmentalBehaviour, BonusAcceptor {
 
-    var defense: Int = 100
-    var strength: Int = 150
-    var life: Int = 500
-    var regeneration: Float = 0.01f
+    private var defense: Int = 100
+    private var strength: Int = 150
+    private var life: Int = 500
+    private var regeneration: Float = 0.01f
 
     override fun setBonus(bonus: Bonus) {
         for ((bonusParam, bonusValue) in bonus.getBonus()) {
@@ -24,6 +24,7 @@ data class Fish(override val type: Environment,
                 BonusEffect.REGENERATION -> {
                     regeneration += bonusValue
                 }
+                //TODO: this can be extended later
             }
         }
     }

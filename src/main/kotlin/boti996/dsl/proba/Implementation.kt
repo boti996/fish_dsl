@@ -2,8 +2,6 @@ package boti996.dsl.proba
 
 import boti996.dsl.proba.models.*
 import boti996.dsl.proba.models.BonusProviders.*
-import javafx.geometry.Pos
-import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 
 @DslMarker
@@ -95,7 +93,7 @@ abstract class ShopEntryContainer {
 
     fun accessory(price: Int,
                   accessory: AccessoryType,
-                  position: Position,
+                  position: Position = Position(0, 0),
                   setup: AccessoryBuilder.() -> Unit = {}) {
 
         val accessoryBuilder = AccessoryBuilder(accessory, position)
@@ -213,12 +211,9 @@ data class GameBuilder(val initialMoney: Int,
     }
 
     fun build(): Game {
-        assertNotNull(storage, "Storage must be defined.")
-        assertNotNull(shop, "Shop must be defined")
-
         val game = Game(initialMoney, moneyBonusPerLevel, maxSkippableLevels, levelSize, levels)
-        game.setStorage(storage!!)
-        game.setShop(shop!!)
+        storage?.let { game.storage = it }
+        shop?.let { game.shop = it }
         return game
     }
 
@@ -249,17 +244,6 @@ fun game(initialMoney: Int = 100,
 @GameDsl
 fun note(message: String) {}
 
-/* TODO: simple tests:
- *      - game in game -> Exception
- *      - game without storage, shop -> Exception
- *      - multiple storages, shops -> Exception
- *      - DSL-syntax error -> Exception
- *      - level with accessories, mobs
- *      - accessory with bonuses
- *      - fish woth equipments
- *      - storage with fishes, accessories
- *      - shop with fishes, accessories
- *
- * TODO: other:
+/* TODO: other:
  *      - mobs {}, fishes {}, accessories {}, levels {}, equipments {} (optional) visual containers
  */

@@ -24,6 +24,15 @@ enum class AccessoryType : BonusProvider<Environment> {
                           Bonus(BonusType.EXTRA_HEAL, -0.1f)
             )
         }
+    },
+    TROPICAL_AMPLIFIER {
+        override fun getBonuses(modifierType: Environment?): List<Bonus> {
+            modifierType?.let {
+                if (modifierType == Environment.TROPICAL)
+                    return listOf(Bonus(BonusType.EXTRA_STRENGTH, 2.0f))
+            }
+            return listOf(Bonus(BonusType.EXTRA_STRENGTH, 0.0f))
+        }
     }
 }
 
@@ -33,7 +42,7 @@ enum class AccessoryType : BonusProvider<Environment> {
  * @param position is the position of accessory on the map
  */
 data class Accessory(val accessory: AccessoryType,
-                     var position: Position,
+                     var position: Position = Position(0, 0),
                      val additionalBonuses: List<Bonus> = listOf()) : BonusProvider<Environment> {
 
     override fun getBonuses(modifierType: Environment?): List<Bonus> {
