@@ -1,41 +1,109 @@
 package boti996.dsl.proba
 
 import boti996.dsl.proba.models.*
-import boti996.dsl.proba.models.BonusProviders.Accessory
-import boti996.dsl.proba.models.BonusProviders.AccessoryType
-import boti996.dsl.proba.models.BonusProviders.Environment
-import boti996.dsl.proba.models.BonusProviders.Position
+import boti996.dsl.proba.models.BonusProviders.*
+import kotlin.test.assertNotNull
+import kotlin.test.assertNull
 
 @DslMarker
 annotation class GameDsl
 
+@GameDsl
+data class BonusBuilder(val type: BonusType,
+                        val multiplier: Float) {
+
+    fun build() : Bonus {
+        return Bonus(type, multiplier)
+    }
+}
 
 @GameDsl
-class AccessoryBuilder(
-    accessory: AccessoryType,
-    position: Position
-) {
+data class AccessoryBuilder(val accessory: AccessoryType,
+                            val position: Position) {
+
+    private val bonuses = mutableListOf<Bonus>()
+
+    operator fun Bonus.unaryPlus() {
+        bonuses += this
+    }
+
+    fun bonus(type: BonusType,
+              multiplier: Float = 1.0F,
+              setup: BonusBuilder.() -> Unit = {}) {
+
+        val bonusBuilder = BonusBuilder(type, multiplier)
+        bonusBuilder.setup()
+        bonuses += bonusBuilder.build()
+    }
+
     fun build(): Accessory {
-        TODO()
+        return Accessory(accessory, position, bonuses)
     }
-
 }
 
+@GameDsl
+data class EquipmentBuilder(val equipment: Equipment) {
+
+    fun build() : Equipment {
+        return equipment
+    }
+}
 
 @GameDsl
-class FishBuilder(type: Environment) {
+data class FishBuilder(val type: Environment) {
+
+    private val equipments = mutableListOf<Equipment>()
+
+    operator fun Equipment.unaryPlus() {
+        equipments += this
+    }
+
+    fun equipment(type: Equipment,
+                  setup: EquipmentBuilder.() -> Unit = {}) {
+
+        val equipmentBuilder = EquipmentBuilder(type)
+        equipmentBuilder.setup()
+        equipments += equipmentBuilder.build()
+    }
+
     fun build(): Fish {
-        TODO()
+        return Fish(type, equipments)
     }
-
 }
 
-@GameDsl
-data class LevelBuilder(val isSkippable: Boolean,
-                        val isExtraAccessoriesEnabled: Boolean,
-                        val extraMoneyBonus: Float,
-                        val environment: Environment) {
+abstract class ShopEntryContainer {
+    val fishes = mutableListOf<ShopEntry<Fish>>()
+    val accessories = mutableListOf<ShopEntry<Accessory>>()
 
+    operator fun ShopEntry<Any>.unaryPlus() {
+        @Suppress("UNCHECKED_CAST")
+        when (this.item) {
+            is Fish -> fishes += this as ShopEntry<Fish>
+            is Accessory -> accessories += this as ShopEntry<Accessory>
+        }
+    }
+
+    fun fish(price: Int,
+             type: Environment,
+             setup: FishBuilder.() -> Unit = {}) {
+
+        val fishBuilder = FishBuilder(type)
+        fishBuilder.setup()
+        fishes += ShopEntry(price, fishBuilder.build())
+    }
+
+    fun accessory(price: Int,
+                  accessory: AccessoryType,
+                  position: Position,
+                  setup: AccessoryBuilder.() -> Unit = {}) {
+
+        val accessoryBuilder = AccessoryBuilder(accessory, position)
+        accessoryBuilder.setup()
+        accessories += ShopEntry(price, accessoryBuilder.build())
+    }
+}
+
+abstract class FishAccessoryContainer {
     val fishes = mutableListOf<Fish>()
     val accessories = mutableListOf<Accessory>()
 
@@ -63,13 +131,44 @@ data class LevelBuilder(val isSkippable: Boolean,
         accessoryBuilder.setup()
         accessories += accessoryBuilder.build()
     }
+}
+
+@GameDsl
+data class LevelBuilder(val isSkippable: Boolean,
+                        val isExtraAccessoriesEnabled: Boolean,
+                        val extraMoneyBonus: Float,
+                        val environment: Environment) : FishAccessoryContainer() {
 
     fun build(): Level {
         return Level(isSkippable, isExtraAccessoriesEnabled, extraMoneyBonus, environment, fishes, accessories)
     }
-
 }
 
+@GameDsl
+class StorageBuilder : FishAccessoryContainer() {
+
+    fun build() : Storage {
+        val storage = Storage()
+        for (fish in fishes)
+            storage.addFish(fish)
+        for (accessory in accessories)
+            storage.addAccessory(accessory)
+        return storage
+    }
+}
+
+@GameDsl
+class ShopBuilder : ShopEntryContainer() {
+
+    fun build() : Shop {
+        val shop = Shop()
+        for (fish in fishes)
+            shop.addFish(fish)
+        for (accessory in accessories)
+            shop.addAccessory(accessory)
+        return shop
+    }
+}
 
 @GameDsl
 data class GameBuilder(val initialMoney: Int,
@@ -77,19 +176,31 @@ data class GameBuilder(val initialMoney: Int,
                        val maxSkippableLevels: Int,
                        val levelSize: Position) {
 
-    val levels = mutableListOf<Level>()
-    //TODO: game must contain 1! storage and shop
-    val storage = Storage()
-    val shop = Shop()
+    private val levels = mutableListOf<Level>()
+    private var storage : Storage? = null
+    private var shop : Shop? = null
 
-    /**
-     * add new levels to the game
-     */
     operator fun Level.unaryPlus() {
         levels += this
     }
 
-    fun level(isSkippable: Boolean = false,
+    fun storage(setup: StorageBuilder.() -> Unit = {}) {
+        assertNull(storage, "Only one storage must be defined")
+
+        val storageBuilder = StorageBuilder()
+        storageBuilder.setup()
+        storage = storageBuilder.build()
+    }
+
+    fun shop(setup: ShopBuilder.() -> Unit = {}) {
+        assertNull(shop, "Only one shop must be defined")
+
+        val shopBuilder = ShopBuilder()
+        shopBuilder.setup()
+        shop = shopBuilder.build()
+    }
+
+    fun level(isSkippable: Boolean  = false,
               isExtraAccessoriesEnabled: Boolean = true,
               extraMoneyBonus: Float = 0.0F,
               environment: Environment = Environment.RIVER,
@@ -101,7 +212,13 @@ data class GameBuilder(val initialMoney: Int,
     }
 
     fun build(): Game {
-        return Game(initialMoney, moneyBonusPerLevel, maxSkippableLevels, levelSize, levels)
+        assertNotNull(storage, "Storage must be defined.")
+        assertNotNull(shop, "Shop must be defined")
+
+        val game = Game(initialMoney, moneyBonusPerLevel, maxSkippableLevels, levelSize, levels)
+        game.setStorage(storage!!)
+        game.setShop(shop!!)
+        return game
     }
 
     /**
@@ -113,7 +230,6 @@ data class GameBuilder(val initialMoney: Int,
         message = "Games can't be nested.")
     fun game(param: () -> Unit = {}) {
     }
-
 }
 
 
@@ -121,7 +237,7 @@ data class GameBuilder(val initialMoney: Int,
 fun game(initialMoney: Int = 100,
          moneyBonusPerLevel: Float = 0.1F,
          maxSkippableLevels: Int = 0,
-         levelSize: Position = Position(100, 50),
+         levelSize: Position  = Position(100, 50),
          setup: GameBuilder.() -> Unit): Game {
 
     val gameBuilder = GameBuilder(initialMoney, moneyBonusPerLevel, maxSkippableLevels, levelSize)
@@ -129,7 +245,7 @@ fun game(initialMoney: Int = 100,
     return gameBuilder.build()
 }
 
-
+//TODO: simple tests
 
 /*
 Kell: game, levels, level, entities of level, accessories of level, entity, equioments of entity, equipment,
