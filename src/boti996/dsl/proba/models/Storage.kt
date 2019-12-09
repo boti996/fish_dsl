@@ -8,10 +8,8 @@ class Shop : AbstractStorage<ShopEntry<Fish>, ShopEntry<Accessory>>()
 
 class Storage : AbstractStorage<Fish, Accessory>()
 
-
 abstract class AbstractStorage<F, A> {
-    val fishes: List<F> = mutableListOf()
-    //TODO: getter-setter ?
+    private val fishes: List<F> = mutableListOf()
 
     fun addFish(fish: F) {
         fishes as MutableList
@@ -23,8 +21,7 @@ abstract class AbstractStorage<F, A> {
         fishes.remove(fish)
     }
 
-    val accessories: List<A> = mutableListOf()
-    //TODO: getter-setter ?
+    private val accessories: List<A> = mutableListOf()
 
     fun addAccessory(accessory: A) {
         accessories as MutableList
@@ -35,7 +32,4 @@ abstract class AbstractStorage<F, A> {
         accessories as MutableList
         accessories.remove(accessory)
     }
-
-
-
 }
