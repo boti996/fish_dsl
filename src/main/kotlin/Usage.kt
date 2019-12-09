@@ -1,10 +1,10 @@
-package boti996.dsl.proba
-
+import boti996.dsl.proba.game
 import boti996.dsl.proba.models.BonusProviders.AccessoryType
 import boti996.dsl.proba.models.BonusProviders.Environment
 import boti996.dsl.proba.models.BonusProviders.Equipment
 import boti996.dsl.proba.models.BonusProviders.Position
 import boti996.dsl.proba.models.BonusType
+import boti996.dsl.proba.note
 
 fun main() {
     val game = game(500, 0.5F, 1, Position(60, 40)) {
