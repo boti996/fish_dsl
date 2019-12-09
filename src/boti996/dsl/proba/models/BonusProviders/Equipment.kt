@@ -9,7 +9,7 @@ import boti996.dsl.proba.models.BonusType
  */
 enum class Equipment : BonusProvider<Environment> {
     SHIELD {
-        override fun getBonuses(fishType: Environment?) : List<Bonus> {
+        override fun getBonuses(modifierType: Environment?) : List<Bonus> {
             return listOf(
                 Bonus(
                     BonusType.EXTRA_DEFENSE,
@@ -19,8 +19,8 @@ enum class Equipment : BonusProvider<Environment> {
         }
     },
     SHIELD_OF_HEALING {
-        override fun getBonuses(fishType: Environment?): List<Bonus> {
-            val list = SHIELD.getBonuses(fishType) as MutableList
+        override fun getBonuses(modifierType: Environment?): List<Bonus> {
+            val list = SHIELD.getBonuses(modifierType) as MutableList
             list.addAll(listOf(
                 Bonus(
                     BonusType.EXTRA_HEAL,
@@ -33,7 +33,7 @@ enum class Equipment : BonusProvider<Environment> {
 
     },
     WEAPON {
-        override fun getBonuses(fishType: Environment?): List<Bonus> {
+        override fun getBonuses(modifierType: Environment?): List<Bonus> {
             return listOf(
                 Bonus(
                     BonusType.EXTRA_STRENGTH,
@@ -43,13 +43,12 @@ enum class Equipment : BonusProvider<Environment> {
         }
     },
     WEAPON_OF_RIVER_FISH {
-        override fun getBonuses(fishType: Environment?): List<Bonus> {
-            val multiplier = if (fishType == Environment.RIVER) 1.5f else 1.0f
-            return WEAPON.getBonuses(fishType)
+        override fun getBonuses(modifierType: Environment?): List<Bonus> {
+            val multiplier = if (modifierType == Environment.RIVER) 1.5f else 1.0f
+            return WEAPON.getBonuses(modifierType)
                 .map { e -> e.multiplier *= multiplier; e }
             // TODO: test it! amplification of WEAPON's bonuses
         }
 
     };
-
 }

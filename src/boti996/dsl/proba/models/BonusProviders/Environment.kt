@@ -1,9 +1,9 @@
 package boti996.dsl.proba.models.BonusProviders
 
-import boti996.dsl.proba.Game
 import boti996.dsl.proba.models.Bonus
 import boti996.dsl.proba.models.BonusProvider
 import boti996.dsl.proba.models.BonusType
+import boti996.dsl.proba.models.Game
 
 /**
  * specifies additional [Environment]-dependent [Bonus]-s for fishes
@@ -11,8 +11,8 @@ import boti996.dsl.proba.models.BonusType
 enum class Environment :
     BonusProvider<Environment> {
     TROPICAL {
-        override fun getBonuses(fishType: Environment?): List<Bonus> {
-            return when(fishType) {
+        override fun getBonuses(modifierType: Environment?): List<Bonus> {
+            return when(modifierType) {
                 TROPICAL -> {
                     listOf(
                         Bonus(
@@ -30,8 +30,8 @@ enum class Environment :
 
     },
     RIVER {
-        override fun getBonuses(fishType: Environment?): List<Bonus> {
-            return when(fishType) {
+        override fun getBonuses(modifierType: Environment?): List<Bonus> {
+            return when(modifierType) {
                 TROPICAL -> {
                     listOf(
                         Bonus(
@@ -62,8 +62,8 @@ enum class Environment :
 
     },
     DEEP_SEA {
-        override fun getBonuses(fishType: Environment?): List<Bonus> {
-            return when (fishType) {
+        override fun getBonuses(modifierType: Environment?): List<Bonus> {
+            return when (modifierType) {
                 TROPICAL -> {
                     listOf(
                         Bonus(

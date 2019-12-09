@@ -62,14 +62,12 @@ interface BonusAcceptor {
  */
 data class Bonus(val bonus: BonusType, var multiplier: Float = 1.0f) {
     fun getBonus(): Map<BonusEffect, Float> = bonus.getBonus(multiplier)
-    fun //TODO
+    //TODO fun ...
 }
 
 /**
  * object has accessible [Bonus]-s
  */
-// TODO: fishType parameter might not alway will be used
-// TODO: genericity is not used in current version
 interface BonusProvider<T : Enum<T>> {
-    fun getBonuses(fishType: T? = null): List<Bonus>
+    fun getBonuses(modifierType: T? = null): List<Bonus>
 }
