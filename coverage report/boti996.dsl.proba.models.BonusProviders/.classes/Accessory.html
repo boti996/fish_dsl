@@ -1,0 +1,154 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Accessory</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">boti996.dsl.proba.models.BonusProviders</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Accessory (boti996.dsl.proba.models.BonusProviders)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Accessory</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    66,7%
+  </span>
+  <span class="absValue">
+    (4/ 6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    43,8%
+  </span>
+  <span class="absValue">
+    (7/ 16)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package boti996.dsl.proba.models.BonusProviders
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import boti996.dsl.proba.models.Bonus
+<i>4</i>&nbsp;import boti996.dsl.proba.models.BonusProvider
+<i>5</i>&nbsp;import boti996.dsl.proba.models.BonusType
+<i>6</i>&nbsp;
+<i>7</i>&nbsp;/**
+<i>8</i>&nbsp; * specifies additional [AccessoryType]-dependent [Bonus]-s for fishes
+<i>9</i>&nbsp; */
+<i>10</i>&nbsp;enum class AccessoryType : BonusProvider&lt;Environment&gt; {
+<i>11</i>&nbsp;    OXYGEN_PUMP {
+<i>12</i>&nbsp;        override fun getBonuses(modifierType: Environment?): List&lt;Bonus&gt; {
+<i>13</i>&nbsp;            return listOf(Bonus(BonusType.ANOXIA, -0.5f))
+<i>14</i>&nbsp;        }
+<i>15</i>&nbsp;    },
+<i>16</i>&nbsp;    STRENGTH_AMPLIFIER {
+<i>17</i>&nbsp;        override fun getBonuses(modifierType: Environment?): List&lt;Bonus&gt; {
+<i>18</i>&nbsp;            return listOf(Bonus(BonusType.EXTRA_STRENGTH, 1.0f))
+<i>19</i>&nbsp;        }
+<i>20</i>&nbsp;    },
+<i>21</i>&nbsp;    POISON {
+<i>22</i>&nbsp;        override fun getBonuses(modifierType: Environment?): List&lt;Bonus&gt; {
+<i>23</i>&nbsp;            return listOf(Bonus(BonusType.EXTRA_STRENGTH, -0.2f),
+<i>24</i>&nbsp;                          Bonus(BonusType.EXTRA_HEAL, -0.1f)
+<i>25</i>&nbsp;            )
+<i>26</i>&nbsp;        }
+<i>27</i>&nbsp;    },
+<i>28</i>&nbsp;    TROPICAL_AMPLIFIER {
+<i>29</i>&nbsp;        override fun getBonuses(modifierType: Environment?): List&lt;Bonus&gt; {
+<i>30</i>&nbsp;            modifierType?.let {
+<i>31</i>&nbsp;                if (modifierType == Environment.TROPICAL)
+<i>32</i>&nbsp;                    return listOf(Bonus(BonusType.EXTRA_STRENGTH, 2.0f))
+<i>33</i>&nbsp;            }
+<i>34</i>&nbsp;            return listOf(Bonus(BonusType.EXTRA_STRENGTH, 0.0f))
+<i>35</i>&nbsp;        }
+<i>36</i>&nbsp;    }
+<i>37</i>&nbsp;}
+<i>38</i>&nbsp;
+<i>39</i>&nbsp;/**
+<i>40</i>&nbsp; * wrapper for [AccessoryType] with [Position] data
+<i>41</i>&nbsp; * @param accessory is the type of accessory
+<i>42</i>&nbsp; * @param position is the position of accessory on the map
+<i>43</i>&nbsp; */
+<b class="fc"><i>44</i>&nbsp;data class Accessory(val accessory: AccessoryType,</b>
+<b class="fc"><i>45</i>&nbsp;                     var position: Position = Position(0, 0),</b>
+<b class="fc"><i>46</i>&nbsp;                     val additionalBonuses: List&lt;Bonus&gt; = listOf()) : BonusProvider&lt;Environment&gt; {</b>
+<i>47</i>&nbsp;
+<i>48</i>&nbsp;    override fun getBonuses(modifierType: Environment?): List&lt;Bonus&gt; {
+<b class="nc"><i>49</i>&nbsp;        val bonuses = accessory.getBonuses(modifierType)</b>
+<b class="nc"><i>50</i>&nbsp;        return if (additionalBonuses.isEmpty()) bonuses</b>
+<i>51</i>&nbsp;        else {
+<b class="nc"><i>52</i>&nbsp;            val extendedBonuses = bonuses.toMutableList()</b>
+<b class="nc"><i>53</i>&nbsp;            extendedBonuses.addAll(additionalBonuses)</b>
+<b class="nc"><i>54</i>&nbsp;            extendedBonuses</b>
+<i>55</i>&nbsp;        }
+<i>56</i>&nbsp;    }
+<i>57</i>&nbsp;
+<i>58</i>&nbsp;    override fun equals(other: Any?): Boolean {
+<b class="fc"><i>59</i>&nbsp;        return other is Accessory &amp;&amp;</b>
+<b class="fc"><i>60</i>&nbsp;                accessory == other.accessory &amp;&amp;</b>
+<b class="fc"><i>61</i>&nbsp;                position == other.position &amp;&amp;</b>
+<b class="fc"><i>62</i>&nbsp;                additionalBonuses == other.additionalBonuses</b>
+<i>63</i>&nbsp;    }
+<i>64</i>&nbsp;
+<i>65</i>&nbsp;    override fun hashCode(): Int {
+<b class="nc"><i>66</i>&nbsp;        var result = accessory.hashCode()</b>
+<b class="nc"><i>67</i>&nbsp;        result = 31 * result + position.hashCode()</b>
+<b class="nc"><i>68</i>&nbsp;        result = 31 * result + additionalBonuses.hashCode()</b>
+<b class="nc"><i>69</i>&nbsp;        return result</b>
+<i>70</i>&nbsp;    }
+<i>71</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2019-12-10 00:10</div>
+</div>
+</body>
+</html>

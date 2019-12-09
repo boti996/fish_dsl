@@ -1,0 +1,166 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Level</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">boti996.dsl.proba.models</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Level (boti996.dsl.proba.models)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Level</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    37,5%
+  </span>
+  <span class="absValue">
+    (3/ 8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    45%
+  </span>
+  <span class="absValue">
+    (9/ 20)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package boti996.dsl.proba.models
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import boti996.dsl.proba.models.BonusProviders.Accessory
+<i>4</i>&nbsp;import boti996.dsl.proba.models.BonusProviders.Environment
+<i>5</i>&nbsp;import boti996.dsl.proba.models.BonusProviders.Position
+<i>6</i>&nbsp;
+<b class="fc"><i>7</i>&nbsp;data class Level(val isSkippable: Boolean,</b>
+<b class="nc"><i>8</i>&nbsp;                 val isExtraAccessoriesEnabled: Boolean,</b>
+<b class="nc"><i>9</i>&nbsp;                 val extraMoneyBonus: Float,</b>
+<b class="nc"><i>10</i>&nbsp;                 val environment: Environment,</b>
+<b class="nc"><i>11</i>&nbsp;                 val fishes: List&lt;Fish&gt; = listOf(),</b>
+<b class="fc"><i>12</i>&nbsp;                 val accessories: List&lt;Accessory&gt; = listOf()) {</b>
+<i>13</i>&nbsp;
+<i>14</i>&nbsp;    override fun equals(other: Any?): Boolean {
+<b class="fc"><i>15</i>&nbsp;        return other is Level &amp;&amp;</b>
+<b class="fc"><i>16</i>&nbsp;                isSkippable == other.isSkippable &amp;&amp;</b>
+<b class="fc"><i>17</i>&nbsp;                isExtraAccessoriesEnabled == other.isExtraAccessoriesEnabled &amp;&amp;</b>
+<b class="fc"><i>18</i>&nbsp;                extraMoneyBonus == other.extraMoneyBonus &amp;&amp;</b>
+<b class="fc"><i>19</i>&nbsp;                environment == other.environment &amp;&amp;</b>
+<b class="fc"><i>20</i>&nbsp;                fishes == other.fishes &amp;&amp;</b>
+<b class="fc"><i>21</i>&nbsp;                accessories == other.accessories</b>
+<i>22</i>&nbsp;    }
+<i>23</i>&nbsp;
+<i>24</i>&nbsp;    override fun hashCode(): Int {
+<b class="nc"><i>25</i>&nbsp;        var result = isSkippable.hashCode()</b>
+<b class="nc"><i>26</i>&nbsp;        result = 31 * result + isExtraAccessoriesEnabled.hashCode()</b>
+<b class="nc"><i>27</i>&nbsp;        result = 31 * result + extraMoneyBonus.hashCode()</b>
+<b class="nc"><i>28</i>&nbsp;        result = 31 * result + environment.hashCode()</b>
+<b class="nc"><i>29</i>&nbsp;        result = 31 * result + fishes.hashCode()</b>
+<b class="nc"><i>30</i>&nbsp;        result = 31 * result + accessories.hashCode()</b>
+<b class="nc"><i>31</i>&nbsp;        return result</b>
+<i>32</i>&nbsp;    }
+<i>33</i>&nbsp;}
+<i>34</i>&nbsp;
+<i>35</i>&nbsp;data class Game(val initialMoney: Int,
+<i>36</i>&nbsp;                val moneyBonusPerLevel: Float,
+<i>37</i>&nbsp;                val maxSkippableLevels: Int,
+<i>38</i>&nbsp;                val levelSize: Position,
+<i>39</i>&nbsp;                val levels: List&lt;Level&gt;) {
+<i>40</i>&nbsp;
+<i>41</i>&nbsp;    var storage = Storage()
+<i>42</i>&nbsp;    var shop = Shop()
+<i>43</i>&nbsp;
+<i>44</i>&nbsp;    private var currentLevelIdx = 0
+<i>45</i>&nbsp;
+<i>46</i>&nbsp;    fun getCurrentLevel() : Level {
+<i>47</i>&nbsp;        return levels[currentLevelIdx]
+<i>48</i>&nbsp;    }
+<i>49</i>&nbsp;
+<i>50</i>&nbsp;    fun setCurrentLevel(levelIdx : Int, isSkipping: Boolean = false) : Boolean {
+<i>51</i>&nbsp;        if (levels.size &lt;= levelIdx) return false   // non-existent level
+<i>52</i>&nbsp;        if (isSkipping) {
+<i>53</i>&nbsp;            if (levelIdx - currentLevelIdx &gt; maxSkippableLevels) return false   // too much skipped level
+<i>54</i>&nbsp;            for (idx in currentLevelIdx until levelIdx)
+<i>55</i>&nbsp;                if (!levels[idx].isSkippable) return false  // non-skippable level
+<i>56</i>&nbsp;        }
+<i>57</i>&nbsp;        currentLevelIdx = levelIdx  // otherwise
+<i>58</i>&nbsp;        return true
+<i>59</i>&nbsp;    }
+<i>60</i>&nbsp;
+<i>61</i>&nbsp;    override fun equals(other: Any?): Boolean {
+<i>62</i>&nbsp;        return other is Game &amp;&amp;
+<i>63</i>&nbsp;                initialMoney == other.initialMoney &amp;&amp;
+<i>64</i>&nbsp;                moneyBonusPerLevel == other.moneyBonusPerLevel &amp;&amp;
+<i>65</i>&nbsp;                maxSkippableLevels == other.maxSkippableLevels &amp;&amp;
+<i>66</i>&nbsp;                levelSize == other.levelSize &amp;&amp;
+<i>67</i>&nbsp;                levels == other.levels &amp;&amp;
+<i>68</i>&nbsp;                storage == other.storage &amp;&amp;
+<i>69</i>&nbsp;                shop == other.shop
+<i>70</i>&nbsp;    }
+<i>71</i>&nbsp;
+<i>72</i>&nbsp;    override fun hashCode(): Int {
+<i>73</i>&nbsp;        var result = initialMoney
+<i>74</i>&nbsp;        result = 31 * result + moneyBonusPerLevel.hashCode()
+<i>75</i>&nbsp;        result = 31 * result + maxSkippableLevels
+<i>76</i>&nbsp;        result = 31 * result + levelSize.hashCode()
+<i>77</i>&nbsp;        result = 31 * result + levels.hashCode()
+<i>78</i>&nbsp;        result = 31 * result + storage.hashCode()
+<i>79</i>&nbsp;        result = 31 * result + shop.hashCode()
+<i>80</i>&nbsp;        result = 31 * result + currentLevelIdx
+<i>81</i>&nbsp;        return result
+<i>82</i>&nbsp;    }
+<i>83</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2019-12-10 00:10</div>
+</div>
+</body>
+</html>

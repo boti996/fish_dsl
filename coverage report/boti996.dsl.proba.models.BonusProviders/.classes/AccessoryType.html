@@ -1,0 +1,237 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: AccessoryType</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">boti996.dsl.proba.models.BonusProviders</a> ]
+</div>
+
+<h1>Coverage Summary for Class: AccessoryType (boti996.dsl.proba.models.BonusProviders)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">AccessoryType</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">AccessoryType$OXYGEN_PUMP</td>
+<td class="coverageStat">
+  <span class="percent">
+    50%
+  </span>
+  <span class="absValue">
+    (1/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    50%
+  </span>
+  <span class="absValue">
+    (1/ 2)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">AccessoryType$POISON</td>
+<td class="coverageStat">
+  <span class="percent">
+    50%
+  </span>
+  <span class="absValue">
+    (1/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    33,3%
+  </span>
+  <span class="absValue">
+    (1/ 3)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">AccessoryType$STRENGTH_AMPLIFIER</td>
+<td class="coverageStat">
+  <span class="percent">
+    50%
+  </span>
+  <span class="absValue">
+    (1/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    50%
+  </span>
+  <span class="absValue">
+    (1/ 2)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">AccessoryType$TROPICAL_AMPLIFIER</td>
+<td class="coverageStat">
+  <span class="percent">
+    50%
+  </span>
+  <span class="absValue">
+    (1/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    16,7%
+  </span>
+  <span class="absValue">
+    (1/ 6)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    55,6%
+  </span>
+  <span class="absValue">
+    (5/ 9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    35,7%
+  </span>
+  <span class="absValue">
+    (5/ 14)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package boti996.dsl.proba.models.BonusProviders
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import boti996.dsl.proba.models.Bonus
+<i>4</i>&nbsp;import boti996.dsl.proba.models.BonusProvider
+<i>5</i>&nbsp;import boti996.dsl.proba.models.BonusType
+<i>6</i>&nbsp;
+<i>7</i>&nbsp;/**
+<i>8</i>&nbsp; * specifies additional [AccessoryType]-dependent [Bonus]-s for fishes
+<i>9</i>&nbsp; */
+<b class="fc"><i>10</i>&nbsp;enum class AccessoryType : BonusProvider&lt;Environment&gt; {</b>
+<b class="fc"><i>11</i>&nbsp;    OXYGEN_PUMP {</b>
+<i>12</i>&nbsp;        override fun getBonuses(modifierType: Environment?): List&lt;Bonus&gt; {
+<b class="nc"><i>13</i>&nbsp;            return listOf(Bonus(BonusType.ANOXIA, -0.5f))</b>
+<i>14</i>&nbsp;        }
+<i>15</i>&nbsp;    },
+<b class="fc"><i>16</i>&nbsp;    STRENGTH_AMPLIFIER {</b>
+<i>17</i>&nbsp;        override fun getBonuses(modifierType: Environment?): List&lt;Bonus&gt; {
+<b class="nc"><i>18</i>&nbsp;            return listOf(Bonus(BonusType.EXTRA_STRENGTH, 1.0f))</b>
+<i>19</i>&nbsp;        }
+<i>20</i>&nbsp;    },
+<b class="fc"><i>21</i>&nbsp;    POISON {</b>
+<i>22</i>&nbsp;        override fun getBonuses(modifierType: Environment?): List&lt;Bonus&gt; {
+<b class="nc"><i>23</i>&nbsp;            return listOf(Bonus(BonusType.EXTRA_STRENGTH, -0.2f),</b>
+<b class="nc"><i>24</i>&nbsp;                          Bonus(BonusType.EXTRA_HEAL, -0.1f)</b>
+<i>25</i>&nbsp;            )
+<i>26</i>&nbsp;        }
+<i>27</i>&nbsp;    },
+<b class="fc"><i>28</i>&nbsp;    TROPICAL_AMPLIFIER {</b>
+<i>29</i>&nbsp;        override fun getBonuses(modifierType: Environment?): List&lt;Bonus&gt; {
+<b class="nc"><i>30</i>&nbsp;            modifierType?.let {</b>
+<b class="nc"><i>31</i>&nbsp;                if (modifierType == Environment.TROPICAL)</b>
+<b class="nc"><i>32</i>&nbsp;                    return listOf(Bonus(BonusType.EXTRA_STRENGTH, 2.0f))</b>
+<b class="nc"><i>33</i>&nbsp;            }</b>
+<b class="nc"><i>34</i>&nbsp;            return listOf(Bonus(BonusType.EXTRA_STRENGTH, 0.0f))</b>
+<i>35</i>&nbsp;        }
+<i>36</i>&nbsp;    }
+<i>37</i>&nbsp;}
+<i>38</i>&nbsp;
+<i>39</i>&nbsp;/**
+<i>40</i>&nbsp; * wrapper for [AccessoryType] with [Position] data
+<i>41</i>&nbsp; * @param accessory is the type of accessory
+<i>42</i>&nbsp; * @param position is the position of accessory on the map
+<i>43</i>&nbsp; */
+<i>44</i>&nbsp;data class Accessory(val accessory: AccessoryType,
+<i>45</i>&nbsp;                     var position: Position = Position(0, 0),
+<i>46</i>&nbsp;                     val additionalBonuses: List&lt;Bonus&gt; = listOf()) : BonusProvider&lt;Environment&gt; {
+<i>47</i>&nbsp;
+<i>48</i>&nbsp;    override fun getBonuses(modifierType: Environment?): List&lt;Bonus&gt; {
+<i>49</i>&nbsp;        val bonuses = accessory.getBonuses(modifierType)
+<i>50</i>&nbsp;        return if (additionalBonuses.isEmpty()) bonuses
+<i>51</i>&nbsp;        else {
+<i>52</i>&nbsp;            val extendedBonuses = bonuses.toMutableList()
+<i>53</i>&nbsp;            extendedBonuses.addAll(additionalBonuses)
+<i>54</i>&nbsp;            extendedBonuses
+<i>55</i>&nbsp;        }
+<i>56</i>&nbsp;    }
+<i>57</i>&nbsp;
+<i>58</i>&nbsp;    override fun equals(other: Any?): Boolean {
+<i>59</i>&nbsp;        return other is Accessory &amp;&amp;
+<i>60</i>&nbsp;                accessory == other.accessory &amp;&amp;
+<i>61</i>&nbsp;                position == other.position &amp;&amp;
+<i>62</i>&nbsp;                additionalBonuses == other.additionalBonuses
+<i>63</i>&nbsp;    }
+<i>64</i>&nbsp;
+<i>65</i>&nbsp;    override fun hashCode(): Int {
+<i>66</i>&nbsp;        var result = accessory.hashCode()
+<i>67</i>&nbsp;        result = 31 * result + position.hashCode()
+<i>68</i>&nbsp;        result = 31 * result + additionalBonuses.hashCode()
+<i>69</i>&nbsp;        return result
+<i>70</i>&nbsp;    }
+<i>71</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2019-12-10 00:10</div>
+</div>
+</body>
+</html>

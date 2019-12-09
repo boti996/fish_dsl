@@ -1,0 +1,143 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Fish</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">boti996.dsl.proba.models</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Fish (boti996.dsl.proba.models)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Fish</td>
+<td class="coverageStat">
+  <span class="percent">
+    66,7%
+  </span>
+  <span class="absValue">
+    (4/ 6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    39,1%
+  </span>
+  <span class="absValue">
+    (9/ 23)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">Fish$WhenMappings</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    66,7%
+  </span>
+  <span class="absValue">
+    (4/ 6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    39,1%
+  </span>
+  <span class="absValue">
+    (9/ 23)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package boti996.dsl.proba.models
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import boti996.dsl.proba.models.BonusProviders.Environment
+<i>4</i>&nbsp;import boti996.dsl.proba.models.BonusProviders.EnvironmentalBehaviour
+<i>5</i>&nbsp;import boti996.dsl.proba.models.BonusProviders.Equipment
+<i>6</i>&nbsp;
+<b class="fc"><i>7</i>&nbsp;data class Fish(override val type: Environment,</b>
+<b class="fc"><i>8</i>&nbsp;                val equipments: List&lt;Equipment&gt; = listOf()) : EnvironmentalBehaviour, BonusAcceptor {</b>
+<i>9</i>&nbsp;
+<b class="fc"><i>10</i>&nbsp;    private var defense: Int = 100</b>
+<b class="fc"><i>11</i>&nbsp;    private var strength: Int = 150</b>
+<b class="fc"><i>12</i>&nbsp;    private var life: Int = 500</b>
+<b class="fc"><i>13</i>&nbsp;    private var regeneration: Float = 0.01f</b>
+<i>14</i>&nbsp;
+<i>15</i>&nbsp;    override fun setBonus(bonus: Bonus) {
+<b class="nc"><i>16</i>&nbsp;        for ((bonusParam, bonusValue) in bonus.getBonus()) {</b>
+<b class="nc"><i>17</i>&nbsp;            when(bonusParam) {</b>
+<i>18</i>&nbsp;                BonusEffect.DEFENSE -&gt; {
+<b class="nc"><i>19</i>&nbsp;                    defense = (defense * bonusValue).toInt()</b>
+<i>20</i>&nbsp;                }
+<i>21</i>&nbsp;                BonusEffect.STRENGTH -&gt; {
+<b class="nc"><i>22</i>&nbsp;                    strength = (strength * bonusValue).toInt()</b>
+<i>23</i>&nbsp;                }
+<i>24</i>&nbsp;                BonusEffect.REGENERATION -&gt; {
+<b class="nc"><i>25</i>&nbsp;                    regeneration += bonusValue</b>
+<i>26</i>&nbsp;                }
+<i>27</i>&nbsp;                //TODO: this can be extended later
+<b class="nc"><i>28</i>&nbsp;            }</b>
+<i>29</i>&nbsp;        }
+<b class="nc"><i>30</i>&nbsp;    }</b>
+<i>31</i>&nbsp;
+<i>32</i>&nbsp;    override fun equals(other: Any?): Boolean {
+<b class="fc"><i>33</i>&nbsp;        return other is Fish &amp;&amp;</b>
+<b class="fc"><i>34</i>&nbsp;                type == other.type &amp;&amp;</b>
+<b class="fc"><i>35</i>&nbsp;                equipments == other.equipments</b>
+<i>36</i>&nbsp;    }
+<i>37</i>&nbsp;
+<i>38</i>&nbsp;    override fun hashCode(): Int {
+<b class="nc"><i>39</i>&nbsp;        var result = type.hashCode()</b>
+<b class="nc"><i>40</i>&nbsp;        result = 31 * result + equipments.hashCode()</b>
+<b class="nc"><i>41</i>&nbsp;        result = 31 * result + defense</b>
+<b class="nc"><i>42</i>&nbsp;        result = 31 * result + strength</b>
+<b class="nc"><i>43</i>&nbsp;        result = 31 * result + life</b>
+<b class="nc"><i>44</i>&nbsp;        result = 31 * result + regeneration.hashCode()</b>
+<b class="nc"><i>45</i>&nbsp;        return result</b>
+<i>46</i>&nbsp;    }
+<i>47</i>&nbsp;
+<i>48</i>&nbsp;    // TODO: setBonuses(), collect bonuses from level environment, equipments and level accessories
+<i>49</i>&nbsp;
+<i>50</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2019-12-10 00:10</div>
+</div>
+</body>
+</html>

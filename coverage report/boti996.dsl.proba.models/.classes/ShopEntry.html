@@ -1,0 +1,151 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: ShopEntry</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">boti996.dsl.proba.models</a> ]
+</div>
+
+<h1>Coverage Summary for Class: ShopEntry (boti996.dsl.proba.models)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ShopEntry</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    66,7%
+  </span>
+  <span class="absValue">
+    (2/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    57,1%
+  </span>
+  <span class="absValue">
+    (4/ 7)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package boti996.dsl.proba.models
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import boti996.dsl.proba.models.BonusProviders.Accessory
+<i>4</i>&nbsp;
+<b class="fc"><i>5</i>&nbsp;data class ShopEntry&lt;T&gt;(val price: Int, val item: T) {</b>
+<i>6</i>&nbsp;
+<i>7</i>&nbsp;    override fun equals(other: Any?): Boolean {
+<b class="fc"><i>8</i>&nbsp;        return other is ShopEntry&lt;*&gt; &amp;&amp;</b>
+<b class="fc"><i>9</i>&nbsp;                price == other.price &amp;&amp;</b>
+<b class="fc"><i>10</i>&nbsp;                item == other.item</b>
+<i>11</i>&nbsp;    }
+<i>12</i>&nbsp;
+<i>13</i>&nbsp;    override fun hashCode(): Int {
+<b class="nc"><i>14</i>&nbsp;        var result = price</b>
+<b class="nc"><i>15</i>&nbsp;        result = 31 * result + (item?.hashCode() ?: 0)</b>
+<b class="nc"><i>16</i>&nbsp;        return result</b>
+<i>17</i>&nbsp;    }
+<i>18</i>&nbsp;}
+<i>19</i>&nbsp;
+<i>20</i>&nbsp;class Shop : AbstractStorage&lt;ShopEntry&lt;Fish&gt;, ShopEntry&lt;Accessory&gt;&gt;()
+<i>21</i>&nbsp;
+<i>22</i>&nbsp;class Storage : AbstractStorage&lt;Fish, Accessory&gt;()
+<i>23</i>&nbsp;
+<i>24</i>&nbsp;abstract class AbstractStorage&lt;F, A&gt; {
+<i>25</i>&nbsp;    val fishes: List&lt;F&gt; = mutableListOf()
+<i>26</i>&nbsp;
+<i>27</i>&nbsp;    fun addFish(fish: F) {
+<i>28</i>&nbsp;        fishes as MutableList
+<i>29</i>&nbsp;        fishes.add(fish)
+<i>30</i>&nbsp;    }
+<i>31</i>&nbsp;
+<i>32</i>&nbsp;    fun removeFish(fish: F) {
+<i>33</i>&nbsp;        fishes as MutableList
+<i>34</i>&nbsp;        fishes.remove(fish)
+<i>35</i>&nbsp;    }
+<i>36</i>&nbsp;
+<i>37</i>&nbsp;    fun addFishes(fishes: List&lt;F&gt;) {
+<i>38</i>&nbsp;        fishes.forEach { addFish(it) }
+<i>39</i>&nbsp;    }
+<i>40</i>&nbsp;
+<i>41</i>&nbsp;    val accessories: List&lt;A&gt; = mutableListOf()
+<i>42</i>&nbsp;
+<i>43</i>&nbsp;    fun addAccessory(accessory: A) {
+<i>44</i>&nbsp;        accessories as MutableList
+<i>45</i>&nbsp;        accessories.add(accessory)
+<i>46</i>&nbsp;    }
+<i>47</i>&nbsp;
+<i>48</i>&nbsp;    fun removeAccessory(accessory: A) {
+<i>49</i>&nbsp;        accessories as MutableList
+<i>50</i>&nbsp;        accessories.remove(accessory)
+<i>51</i>&nbsp;    }
+<i>52</i>&nbsp;
+<i>53</i>&nbsp;    fun addAccessories(accessories: List&lt;A&gt;) {
+<i>54</i>&nbsp;        accessories.forEach { addAccessory(it) }
+<i>55</i>&nbsp;    }
+<i>56</i>&nbsp;
+<i>57</i>&nbsp;    override fun equals(other: Any?): Boolean {
+<i>58</i>&nbsp;        return other is AbstractStorage&lt;*, *&gt; &amp;&amp;
+<i>59</i>&nbsp;                fishes == other.fishes &amp;&amp;
+<i>60</i>&nbsp;                accessories == other.accessories
+<i>61</i>&nbsp;    }
+<i>62</i>&nbsp;
+<i>63</i>&nbsp;    override fun hashCode(): Int {
+<i>64</i>&nbsp;        var result = fishes.hashCode()
+<i>65</i>&nbsp;        result = 31 * result + accessories.hashCode()
+<i>66</i>&nbsp;        return result
+<i>67</i>&nbsp;    }
+<i>68</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2019-12-10 00:10</div>
+</div>
+</body>
+</html>
