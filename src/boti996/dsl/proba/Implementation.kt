@@ -2,6 +2,7 @@ package boti996.dsl.proba
 
 import boti996.dsl.proba.models.*
 import boti996.dsl.proba.models.BonusProviders.*
+import javafx.geometry.Pos
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 
@@ -124,7 +125,7 @@ abstract class FishAccessoryContainer {
     }
 
     fun accessory(accessory: AccessoryType,
-                  position: Position,
+                  position: Position = Position(0, 0),
                   setup: AccessoryBuilder.() -> Unit = {}) {
 
         val accessoryBuilder = AccessoryBuilder(accessory, position)
@@ -258,4 +259,7 @@ fun note(message: String) {}
  *      - fish woth equipments
  *      - storage with fishes, accessories
  *      - shop with fishes, accessories
+ *
+ * TODO: other:
+ *      - mobs {}, fishes {}, accessories {}, levels {}, equipments {} (optional) visual containers
  */

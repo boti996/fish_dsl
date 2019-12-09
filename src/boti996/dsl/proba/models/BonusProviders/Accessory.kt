@@ -17,6 +17,13 @@ enum class AccessoryType : BonusProvider<Environment> {
         override fun getBonuses(modifierType: Environment?): List<Bonus> {
             return listOf(Bonus(BonusType.EXTRA_STRENGTH, 1.0f))
         }
+    },
+    POISON {
+        override fun getBonuses(modifierType: Environment?): List<Bonus> {
+            return listOf(Bonus(BonusType.EXTRA_STRENGTH, -0.2f),
+                          Bonus(BonusType.EXTRA_HEAL, -0.1f)
+            )
+        }
     }
 }
 
