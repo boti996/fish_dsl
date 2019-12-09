@@ -54,4 +54,18 @@ data class Accessory(val accessory: AccessoryType,
             extendedBonuses
         }
     }
+
+    override fun equals(other: Any?): Boolean {
+        return other is Accessory &&
+                accessory == other.accessory &&
+                position == other.position &&
+                additionalBonuses == other.additionalBonuses
+    }
+
+    override fun hashCode(): Int {
+        var result = accessory.hashCode()
+        result = 31 * result + position.hashCode()
+        result = 31 * result + additionalBonuses.hashCode()
+        return result
+    }
 }

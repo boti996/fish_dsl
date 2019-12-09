@@ -102,7 +102,19 @@ enum class Environment :
 /**
  * position of something on map
  */
-data class Position(val x: Int, val y: Int)
+data class Position(val x: Int, val y: Int) {
+    override fun equals(other: Any?): Boolean {
+        return other is Position &&
+                x == other.x &&
+                y == other.y
+    }
+
+    override fun hashCode(): Int {
+        var result = x
+        result = 31 * result + y
+        return result
+    }
+}
 
 /**
  * object has [Environment]-dependent behaviour

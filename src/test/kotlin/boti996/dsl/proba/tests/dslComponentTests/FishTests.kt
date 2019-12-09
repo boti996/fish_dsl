@@ -31,14 +31,6 @@ class FishTests : Spek({
 
             it("Should add ${Equipment::class.simpleName}-s to the ${Fish::class.simpleName}") {
                 assertEquals(gameObject, gameDslObject)
-                assert(gameObject.storage.fishes == gameDslObject.storage.fishes)
-
-                val fishObject = gameObject.storage.fishes[0]
-                val fishDslObject = gameDslObject.storage.fishes[0]
-
-                for (idx in fishDslObject.equipments.indices) {
-                    assert(fishDslObject.equipments[idx] == fishObject.equipments[idx])
-                }
             }
         }
     }

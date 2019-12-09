@@ -62,6 +62,18 @@ interface BonusAcceptor {
  */
 data class Bonus(val bonus: BonusType, var multiplier: Float = 1.0f) {
     fun getBonus(): Map<BonusEffect, Float> = bonus.getBonus(multiplier)
+
+    override fun equals(other: Any?): Boolean {
+        return other is Bonus &&
+                bonus == other.bonus &&
+                multiplier == other.multiplier
+    }
+
+    override fun hashCode(): Int {
+        var result = bonus.hashCode()
+        result = 31 * result + multiplier.hashCode()
+        return result
+    }
 }
 
 /**

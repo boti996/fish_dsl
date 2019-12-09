@@ -32,15 +32,6 @@ class StorageTests : Spek({
 
             it("Should add ${Fish::class.simpleName}-s and ${Accessory::class.simpleName}-s to the ${Storage::class.simpleName}") {
                 assertEquals(gameObject, gameDslObject)
-                assert(gameObject.storage == gameDslObject.storage)
-
-                for (idx in gameDslObject.storage.fishes.indices) {
-                    assert(gameDslObject.storage.fishes[idx] == gameObject.storage.fishes[idx])
-                }
-
-                for (idx in gameDslObject.storage.accessories.indices) {
-                    assert(gameDslObject.storage.accessories[idx] == gameObject.storage.accessories[idx])
-                }
             }
         }
     }

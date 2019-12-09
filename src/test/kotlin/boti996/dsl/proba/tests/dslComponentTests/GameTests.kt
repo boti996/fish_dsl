@@ -42,7 +42,6 @@ class GameTests : Spek({
 
             it("Should set the ${Storage::class.simpleName} of the ${Game::class.simpleName}") {
                 assertEquals(gameObject, gameDslObject)
-                assert(gameObject.storage == gameDslObject.storage)
             }
         }
 
@@ -64,7 +63,6 @@ class GameTests : Spek({
 
             it("Should set the ${Shop::class.simpleName} of the ${Game::class.simpleName}") {
                 assertEquals(gameObject, gameDslObject)
-                assert(gameObject.shop == gameDslObject.shop)
             }
         }
 
@@ -111,7 +109,6 @@ class GameTests : Spek({
 
             it("Should set the ${Level::class.simpleName}-s of the ${Game::class.simpleName}") {
                 assertEquals(gameObject, gameDslObject)
-                assert(gameObject.levels == gameDslObject.levels)
             }
         }
     }

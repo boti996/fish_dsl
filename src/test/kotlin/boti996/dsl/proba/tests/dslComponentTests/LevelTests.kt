@@ -41,17 +41,6 @@ class LevelTests : Spek({
 
             it("Should add ${Fish::class.simpleName}-s and ${Accessory::class.simpleName}-s to the ${Level::class.simpleName}") {
                 assertEquals(gameObject, gameDslObject)
-                val levelObject = gameObject.levels[0]
-                val levelDslObject = gameDslObject.levels[0]
-                assert(levelDslObject == levelDslObject)
-
-                for (idx in levelDslObject.fishes.indices) {
-                    assert(levelDslObject.fishes[idx] == levelObject.fishes[idx])
-                }
-
-                for (idx in levelDslObject.accessories.indices) {
-                    assert(levelDslObject.accessories[idx] == levelObject.accessories[idx])
-                }
             }
         }
     }

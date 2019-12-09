@@ -33,17 +33,6 @@ class ShopTests : Spek({
 
             it("Should add ${Fish::class.simpleName}-s to the ${Shop::class.simpleName}") {
                 assertEquals(gameObject, gameDslObject)
-                assert(gameObject.shop == gameDslObject.shop)
-
-                for (idx in gameDslObject.shop.fishes.indices) {
-                    assert(gameDslObject.shop.fishes[idx].price == gameObject.shop.fishes[idx].price)
-                    assert(gameDslObject.shop.fishes[idx].item == gameObject.shop.fishes[idx].item)
-                }
-
-                for (idx in gameDslObject.shop.accessories.indices) {
-                    assert(gameDslObject.shop.accessories[idx].price == gameObject.shop.accessories[idx].price)
-                    assert(gameDslObject.shop.accessories[idx].item == gameObject.shop.accessories[idx].item)
-                }
             }
         }
     }

@@ -42,17 +42,6 @@ class AccessoryTests : Spek({
 
             it("Should add ${Equipment::class.simpleName}-s to the ${Accessory::class.simpleName}") {
                 assertEquals(gameObject, gameDslObject)
-                assert(gameObject.storage.accessories == gameDslObject.storage.accessories)
-
-                val accessoryObjectBonuses = gameObject.storage.accessories[0].getBonuses()
-                val accessoryDslObjectBonuses = gameDslObject.storage.accessories[0].getBonuses()
-
-                for (idx in accessoryDslObjectBonuses.indices) {
-                    assert(accessoryDslObjectBonuses[idx] == accessoryObjectBonuses[idx])
-                    // multiplied bonuses
-                    assert(accessoryDslObjectBonuses[idx].getBonus() == accessoryObjectBonuses[idx].getBonus())
-                    println(accessoryObjectBonuses[idx].getBonus())
-                }
             }
         }
     }
