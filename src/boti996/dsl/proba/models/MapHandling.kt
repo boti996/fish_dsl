@@ -22,12 +22,15 @@ data class Game(val initialMoney: Int,
                 val levelSize: Position,
                 val levels: List<Level>) {
 
+    private var storage = Storage()
+    fun getStorage() = storage
+    fun setStorage(newStorage : Storage) { storage  = newStorage }
+
+    private var shop = Shop()
+    fun getShop() = shop
+    fun setShop(newShop : Shop) { shop = newShop }
+
     fun getCurrentLevel() : Level {
         TODO()
     }
-
-// TODO: might not be necessary
-//    fun addLevel(level: Level) = levels.add(level)
-//
-//    fun addLevels(newLevels: Iterable<Level>) = levels.addAll(newLevels)
 }
